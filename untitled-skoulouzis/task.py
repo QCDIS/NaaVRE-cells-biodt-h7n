@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+from pyproj import Transformer
 import numpy as np
 import rioxarray
 
@@ -34,21 +34,19 @@ conf_current_mean = 'http://opendap.biodt.eu/ias-pdt/0/outputs/hab3/predictions/
 
 
 conf_current_mean = 'http://opendap.biodt.eu/ias-pdt/0/outputs/hab3/predictions/Current/Sp_0171_mean.tif'
-
 tif_data = rioxarray.open_rasterio(conf_current_mean)
 tif_data = tif_data.rio.reproject("EPSG:4326")
-subset2 = tif_data.rio.clip_box(minx=param_minx, miny=param_miny, maxx=param_maxx, maxy=param_maxy)
-random_points2 = np.loadtxt(random_points_csv_path, delimiter=",")
+subset4 = tif_data.rio.clip_box(minx=param_minx, miny=param_miny, maxx=param_maxx, maxy=param_maxy)
+random_points4 = np.loadtxt(random_points_csv_path, delimiter=",")
+transformer4 = Transformer.from_crs(subset4.rio.crs, "EPSG:4326", always_xy=True)
 
-fig, ax = plt.subplots(figsize=(10, 10))
-subset2.plot(ax=ax)
+coordinates_list = []
+for point in random_points4:
+    lon, lat = transformer4.transform(point[0], point[1])
+    coordinates_list.append({"lat": lat, "lon": lon})
 
-ax.scatter(random_points2[:, 0], random_points2[:, 1], color='red', marker='o', s=50, label='Random Points')
+print(coordinates_list)
 
-ax.set_title('Random Points on Clipped Data')
-ax.set_xlabel('X Coordinate')
-ax.set_ylabel('Y Coordinate')
-ax.legend()
-
-plt.show()
-
+file_coordinates_list = open("/tmp/coordinates_list_" + id + ".json", "w")
+file_coordinates_list.write(json.dumps(coordinates_list))
+file_coordinates_list.close()
