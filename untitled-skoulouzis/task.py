@@ -1,7 +1,6 @@
-from soilgrids import data_processing as dprc
 import glob
-import os
-import shutil
+import pandas as pd
+import re
 
 import argparse
 import json
@@ -12,7 +11,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--coordinates_list', action='store', type=str, required=True, dest='coordinates_list')
+arg_parser.add_argument('--soil_data_prepared', action='store', type=str, required=True, dest='soil_data_prepared')
 
 
 args = arg_parser.parse_args()
@@ -20,28 +19,32 @@ print(args)
 
 id = args.id
 
-coordinates_list = json.loads(args.coordinates_list)
+soil_data_prepared = args.soil_data_prepared.replace('"','')
 
 
 
 
-for coord in coordinates_list:
-    dprc.data_processing(coord)
+file_list = glob.glob(soil_data_prepared+'/*_soil.txt')
+
+df_list = []
+
+for file in file_list:
+    match = re.search(r'lat([-\d.]+)_lon([-\d.]+)', file)
+    if match:
+        lat = float(match.group(1))
+        lon = float(match.group(2))
     
-soil_data_prepared = '/tmp/data/soilDataPrepared'        
-if not os.path.exists(soil_data_prepared):
-    os.makedirs(soil_data_prepared)
+    df = pd.read_csv(file, sep='\t', skiprows=2)  # Assuming the files are tab-separated
     
-txt_files = glob.glob(os.path.join('soilDataPrepared', '*.txt'))
-for txt_file in txt_files:
-    try:
-        target_path = os.path.join(soil_data_prepared, os.path.basename(txt_file))
-        
-        shutil.move(txt_file, target_path)
-    except Exception as e:
-        print(f"Error moving file {txt_file}: {e}")
-        
+    df['Latitude'] = lat
+    df['Longitude'] = lon
+    
+    df_list.append(df)
 
-file_soil_data_prepared = open("/tmp/soil_data_prepared_" + id + ".json", "w")
-file_soil_data_prepared.write(json.dumps(soil_data_prepared))
-file_soil_data_prepared.close()
+soil_data_df = pd.concat(df_list, ignore_index=True)
+
+print(soil_data_df)
+
+file_df_list = open("/tmp/df_list_" + id + ".json", "w")
+file_df_list.write(json.dumps(df_list))
+file_df_list.close()
