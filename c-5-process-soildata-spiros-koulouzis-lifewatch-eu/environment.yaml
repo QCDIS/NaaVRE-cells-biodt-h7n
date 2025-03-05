@@ -1,0 +1,11 @@
+name: venv
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - python>=3.8
+  - nbconvert
+  - pip:
+    - git+https://github.com/BioDT/general-soilgrids-soil-data.git@83ce7f1
+  - papermill
+  - ipykernel
