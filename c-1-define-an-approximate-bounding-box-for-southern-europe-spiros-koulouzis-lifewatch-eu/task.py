@@ -1,4 +1,5 @@
 from pyproj import Transformer
+import matplotlib
 import numpy as np
 import rioxarray
 
@@ -21,6 +22,7 @@ id = args.id
 
 
 
+matplotlib
 
 conf_current_mean = "http://opendap.biodt.eu/ias-pdt/0/outputs/hab3/predictions/Current/Sp_0171_mean.tif"
 tif_data = rioxarray.open_rasterio(conf_current_mean)
