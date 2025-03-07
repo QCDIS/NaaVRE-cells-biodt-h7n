@@ -11,20 +11,18 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--soil_data_prepared', action='store', type=str, required=True, dest='soil_data_prepared')
-
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
-soil_data_prepared = args.soil_data_prepared.replace('"','')
 
 
 
 
 
+soil_data_prepared = 'soilDataPrepared'      
 file_list = glob.glob(soil_data_prepared+'/*_soil.txt')
 
 df_list = []
@@ -44,8 +42,10 @@ for file in file_list:
 
 soil_data_df = pd.concat(df_list, ignore_index=True)
 
-print(soil_data_df)
+df_list_csv_path =  'df_list.csv'
+soil_data_df.to_csv(df_list_csv_path, index=False)
 
-file_df_list = open("/tmp/df_list_" + id + ".json", "w")
-file_df_list.write(json.dumps(df_list))
-file_df_list.close()
+
+file_df_list_csv_path = open("/tmp/df_list_csv_path_" + id + ".json", "w")
+file_df_list_csv_path.write(json.dumps(df_list_csv_path))
+file_df_list_csv_path.close()
