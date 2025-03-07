@@ -22,7 +22,9 @@ id = args.id
 
 
 
+
 matplotlib
+
 
 conf_current_mean = "http://opendap.biodt.eu/ias-pdt/0/outputs/hab3/predictions/Current/Sp_0171_mean.tif"
 tif_data = rioxarray.open_rasterio(conf_current_mean)
@@ -55,13 +57,12 @@ random_indices = np.random.choice(len(valid_coords), num_points, replace=False)
 
 random_points = np.column_stack((valid_x[random_indices], valid_y[random_indices]))
 
-
 transformer = Transformer.from_crs(subset.rio.crs, "EPSG:4326", always_xy=True)
 
 random_points_4326 = np.array([transformer.transform(x, y) for x, y in random_points])
 
 print(type(random_points))
-random_points_csv_path = '/tmp/data/random_points.csv'
+random_points_csv_path = 'random_points.csv'
 np.savetxt(random_points_csv_path, random_points, delimiter=",")
 
 file_random_points_csv_path = open("/tmp/random_points_csv_path_" + id + ".json", "w")
