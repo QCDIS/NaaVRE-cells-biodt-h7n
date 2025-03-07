@@ -40,9 +40,10 @@ for file in file_list:
     
     df_list.append(df)
 
+print(df_list)
 soil_data_df = pd.concat(df_list, ignore_index=True)
 
-df_list_csv_path =  'df_list.csv'
+df_list_csv_path =  '/tmp/data/df_list.csv'
 soil_data_df.to_csv(df_list_csv_path, index=False)
 
 
