@@ -12,12 +12,15 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--current_mean', action='store', type=str, required=True, dest='current_mean')
+
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
+current_mean = args.current_mean.replace('"','')
 
 
 
@@ -26,8 +29,8 @@ id = args.id
 matplotlib
 
 
-conf_current_mean = "http://opendap.biodt.eu/ias-pdt/0/outputs/hab3/predictions/Current/Sp_0171_mean.tif"
-tif_data = rioxarray.open_rasterio(conf_current_mean)
+
+tif_data = rioxarray.open_rasterio(current_mean)
 
 print(tif_data)
 
