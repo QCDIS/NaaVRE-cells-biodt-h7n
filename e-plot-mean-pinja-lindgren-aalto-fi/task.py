@@ -9,6 +9,8 @@ import json
 import os
 arg_parser = argparse.ArgumentParser()
 
+secret_minio_access_key = os.getenv('secret_minio_access_key')
+secret_minio_secret_key = os.getenv('secret_minio_secret_key')
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
@@ -17,6 +19,8 @@ arg_parser.add_argument('--merged_tifs', action='store', type=str, required=True
 
 arg_parser.add_argument('--param_climate_model', action='store', type=str, required=True, dest='param_climate_model')
 arg_parser.add_argument('--param_habitat_name', action='store', type=str, required=True, dest='param_habitat_name')
+arg_parser.add_argument('--param_minio_endpoint', action='store', type=str, required=True, dest='param_minio_endpoint')
+arg_parser.add_argument('--param_minio_user_prefix', action='store', type=str, required=True, dest='param_minio_user_prefix')
 arg_parser.add_argument('--param_species_class', action='store', type=str, required=True, dest='param_species_class')
 
 args = arg_parser.parse_args()
@@ -28,6 +32,8 @@ merged_tifs = json.loads(args.merged_tifs)
 
 param_climate_model = args.param_climate_model.replace('"','')
 param_habitat_name = args.param_habitat_name.replace('"','')
+param_minio_endpoint = args.param_minio_endpoint.replace('"','')
+param_minio_user_prefix = args.param_minio_user_prefix.replace('"','')
 param_species_class = args.param_species_class.replace('"','')
 
 conf_x = 0.95
@@ -81,11 +87,6 @@ output_gif = conf_data_path + os.path.basename(tif_file)
 ani.save(output_gif, writer="pillow", fps=2)
 
 print(f"Animation saved as {output_gif}")
-
-param_minio_endpoint = "scruffy.lab.uvalight.net:9000"
-param_minio_user_prefix = "pinja.lindgren@aalto.fi" # Your personal folder in the naa-vre-user-data bucket in MinIO
-secret_minio_access_key = "wxXs8dchlHO50BJ2HO38"
-secret_minio_secret_key = "H5CM8gGfrIgRPUaJcGacGZ0988Ajw7AUJlzFKOTD"
 
 mc = Minio(endpoint=param_minio_endpoint,
  access_key=secret_minio_access_key,
