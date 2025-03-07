@@ -29,7 +29,7 @@ coordinates_list = json.loads(args.coordinates_list)
 for coord in coordinates_list:
     dprc.data_processing(coord)
     
-soil_data_prepared = '/tmp/data/soilDataPrepared'        
+soil_data_prepared = 'soilDataPrepared'        
 if not os.path.exists(soil_data_prepared):
     os.makedirs(soil_data_prepared)
     
@@ -43,6 +43,3 @@ for txt_file in txt_files:
         print(f"Error moving file {txt_file}: {e}")
         
 
-file_soil_data_prepared = open("/tmp/soil_data_prepared_" + id + ".json", "w")
-file_soil_data_prepared.write(json.dumps(soil_data_prepared))
-file_soil_data_prepared.close()
