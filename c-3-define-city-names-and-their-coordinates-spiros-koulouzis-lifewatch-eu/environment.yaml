@@ -5,9 +5,9 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
-  - pyproj
-  - rioxarray
-  - matplotlib
   - numpy
+  - pyproj
+  - matplotlib
+  - rioxarray
   - papermill
   - ipykernel
