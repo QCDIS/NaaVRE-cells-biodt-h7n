@@ -1,5 +1,6 @@
 from soilgrids import data_processing as dprc
 import glob
+import numpy
 import os
 import shutil
 
@@ -25,11 +26,12 @@ coordinates_list = json.loads(args.coordinates_list)
 
 
 
+numpy
 
 for coord in coordinates_list:
     dprc.data_processing(coord)
     
-soil_data_prepared = 'soilDataPrepared'        
+soil_data_prepared = '/tmp/data/soilDataPrepared'        
 if not os.path.exists(soil_data_prepared):
     os.makedirs(soil_data_prepared)
     
