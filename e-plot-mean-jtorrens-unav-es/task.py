@@ -77,4 +77,3 @@ ani.save(output_gif, writer="pillow", fps=2)
 
 print(f"Animation saved as {output_gif}")
 
-
