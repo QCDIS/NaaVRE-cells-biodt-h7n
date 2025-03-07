@@ -62,7 +62,7 @@ transformer = Transformer.from_crs(subset.rio.crs, "EPSG:4326", always_xy=True)
 random_points_4326 = np.array([transformer.transform(x, y) for x, y in random_points])
 
 print(type(random_points))
-random_points_csv_path = 'random_points.csv'
+random_points_csv_path = '/tmp/data/random_points.csv'
 np.savetxt(random_points_csv_path, random_points, delimiter=",")
 
 file_random_points_csv_path = open("/tmp/random_points_csv_path_" + id + ".json", "w")
