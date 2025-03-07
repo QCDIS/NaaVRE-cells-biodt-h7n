@@ -1,3 +1,4 @@
+from minio import Minio
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import os
@@ -81,5 +82,18 @@ ani.save(output_gif, writer="pillow", fps=2)
 
 print(f"Animation saved as {output_gif}")
 
+param_minio_endpoint = "scruffy.lab.uvalight.net:9000"
+param_minio_user_prefix = "pinja.lindgren@aalto.fi" # Your personal folder in the naa-vre-user-data bucket in MinIO
+secret_minio_access_key = "wxXs8dchlHO50BJ2HO38"
+secret_minio_secret_key = "H5CM8gGfrIgRPUaJcGacGZ0988Ajw7AUJlzFKOTD"
 
+mc = Minio(endpoint=param_minio_endpoint,
+ access_key=secret_minio_access_key,
+ secret_key=secret_minio_secret_key)
+mc.list_buckets()
+objects = mc.list_objects("naa-vre-user-data", prefix=f"{param_minio_user_prefix}/")
+for obj in objects:
+ print(obj.object_name)
+mc.fput_object(bucket_name="naa-vre-user-data", file_path="myfile_local.csv", object_name=f"{param_minio_user_prefix}/myfile.csv")
+mc.fget_object(bucket_name="naa-vre-user-data", object_name=f"{param_minio_user_prefix}/myfile.csv", file_path="myfile_downloaded.csv")
 
