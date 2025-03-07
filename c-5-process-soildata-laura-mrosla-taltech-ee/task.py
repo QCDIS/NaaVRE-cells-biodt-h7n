@@ -28,7 +28,6 @@ coordinates_list = json.loads(args.coordinates_list)
 
 for coord in coordinates_list:
     dprc.data_processing(coord)
-    break
     
 soil_data_prepared = 'soilDataPrepared'        
 if not os.path.exists(soil_data_prepared):
