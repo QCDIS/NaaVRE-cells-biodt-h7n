@@ -26,7 +26,7 @@ soil_data_df = pd.read_csv(soil_data_csv_path)
 
 correlation_matrix = soil_data_df.corr()
 
-species_richness_correlation = correlation_matrix["Species_Richness"]
+species_soil_correlation = correlation_matrix["Species_Probability"]
 
-print(species_richness_correlation)
+print(species_soil_correlation)
 
