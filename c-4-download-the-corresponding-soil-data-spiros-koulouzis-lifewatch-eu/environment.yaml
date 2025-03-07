@@ -5,8 +5,8 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - numpy
   - pyproj
   - rioxarray
-  - numpy
   - papermill
   - ipykernel
