@@ -94,6 +94,5 @@ mc.list_buckets()
 objects = mc.list_objects("naa-vre-user-data", prefix=f"{param_minio_user_prefix}/")
 for obj in objects:
  print(obj.object_name)
-mc.fput_object(bucket_name="naa-vre-user-data", file_path="myfile_local.csv", object_name=f"{param_minio_user_prefix}/myfile.csv")
-mc.fget_object(bucket_name="naa-vre-user-data", object_name=f"{param_minio_user_prefix}/myfile.csv", file_path="myfile_downloaded.csv")
+mc.fput_object(bucket_name="naa-vre-user-data", file_path=output_gif, object_name=f"{param_minio_user_prefix}/output_gif.gif")
 
