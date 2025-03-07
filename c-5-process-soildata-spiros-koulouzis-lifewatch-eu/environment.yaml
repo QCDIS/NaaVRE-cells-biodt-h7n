@@ -5,6 +5,7 @@ dependencies:
   - pip
   - python>=3.8
   - nbconvert
+  - numpy
   - pip:
     - git+https://github.com/QCDIS/general-soilgrids-soil-data.git
   - papermill
