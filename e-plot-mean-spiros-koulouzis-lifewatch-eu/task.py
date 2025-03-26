@@ -42,13 +42,10 @@ conf_y = 0.95
 
 conf_arrow_length = 0.1
 
-conf_data_path = '/tmp/data/'
-
 
 conf_x = 0.95
 conf_y = 0.95
 conf_arrow_length = 0.1
-conf_data_path = '/tmp/data/'
 print(merged_tifs)
 frames = []
 
@@ -83,7 +80,7 @@ def update(frame_idx):
     return img
 
 ani = animation.FuncAnimation(fig, update, frames=len(frames), interval=1000, blit=False)
-output_gif = conf_data_path + os.path.basename(tif_file)
+output_gif = os.path.basename(tif_file)
 ani.save(output_gif, writer="pillow", fps=2)
 
 print(f"Animation saved as {output_gif}")
